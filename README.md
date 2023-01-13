@@ -1,8 +1,9 @@
-|환경|버전|
-|---|---|
-|spring boot| 2.7.7|
-|java|11|
-|h2 db|http://localhost:8080/h2-console|
+| 환경         | 버전    | 비고                               |
+|---|-------|----------------------------------|
+| spring boot | 2.7.7 |                                  |
+| java       | 11    |                                  |
+| h2 db      |       | http://localhost:8080/h2-console |
+
 
 
 # JPA N+1 문제 살펴보기
@@ -54,11 +55,15 @@ List<Member> mebers =  em.createQuery("select m from Member m", Member.class)
 ### batch size 정의
 - batchSize를 사용하면 연관된 엔티티를 조회할 때 지정한 size 만큼 sql의 in 절을 사용해서 조회
 - 최대 1000을 넘지 않는 것을 추천
-- @BatchSize(size = 1000)
+- ex) ```@BatchSize(size = 1000)```
 - ```spring.jpa.properties.hibernate.default_batch_fetch_size=1000```
 
 ### 하이버네이트 @Fetch(FetchMode.SUBSELECT)
 - 연관된 데이터 조회시 서브 쿼리를 사용하여 n+1 문제 해결
+
+### @EntityGraph 사용
+- 지연 로딩(Lazy)로 연관된 엔티티를 join 하여 가져올 수 있도록 하는 기능
+- ex) ```@EntityGraph(attributePaths = "orders")```
 
 ## 정리
 - 즉시로딩은 사용하지 말고 지연 로딩만 사용하는 것을 추천
